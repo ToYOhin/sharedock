@@ -1,0 +1,37 @@
+name: Backend system tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  system-tests:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    container: node:20
+    env:
+      DATABASE_URL: file:../data/system-tests.db?connection_limit=1
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Dependencies
+        working-directory: ./backend
+        run: npm ci
+      - name: Run Server and Test with Newman
+        working-directory: ./backend
+        run: |
+          set -eu
+          mkdir -p ../data
+          npx prisma migrate reset -f
+          npx nest start > /tmp/sharedock-backend.log 2>&1 &
+          server_pid=$!
+          cleanup() {
+            kill "$server_pid" 2>/dev/null || true
+          }
+          trap cleanup EXIT
+          npx wait-on http://localhost:8080/api/configs
+          npx newman run ./test/newman-system-tests.json

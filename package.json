@@ -1,0 +1,26 @@
+{
+    "name":  "sharedock",
+    "version":  "0.9.0",
+    "engines":  {
+                    "node":  "20.x",
+                    "npm":  ">=10 <11"
+                },
+    "scripts":  {
+                    "format":  "cd frontend \u0026\u0026 npm run format \u0026\u0026 cd ../backend \u0026\u0026 npm run format",
+                    "lint":  "cd frontend \u0026\u0026 npm run lint \u0026\u0026 cd ../backend \u0026\u0026 npm run lint",
+                    "verify":  "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1",
+                    "release:check":  "npm run verify",
+                    "version":  "conventional-changelog -p conventionalcommits -i CHANGELOG.md -o CHANGELOG.md \u0026\u0026 git add CHANGELOG.md",
+                    "release:patch":  "cd backend \u0026\u0026 npm version patch --commit-hooks false \u0026\u0026 cd ../frontend \u0026\u0026 npm version patch --commit-hooks false \u0026\u0026 cd .. \u0026\u0026 git add . \u0026\u0026 npm version patch --force -m \u0027release: %s\u0027",
+                    "release:minor":  "cd backend \u0026\u0026 npm version minor --commit-hooks false \u0026\u0026 cd ../frontend \u0026\u0026 npm version minor --commit-hooks false \u0026\u0026 cd .. \u0026\u0026 git add . \u0026\u0026 npm version minor --force -m \u0027release: %s\u0027",
+                    "deploy:dev":  "docker buildx build --tag sharedock:development --platform linux/amd64,linux/arm64 ."
+                },
+    "prettier":  {
+                     "singleQuote":  false,
+                     "trailingComma":  "all"
+                 },
+    "devDependencies":  {
+                            "conventional-changelog":  "^7.2.0",
+                            "conventional-changelog-conventionalcommits":  "^9.3.1"
+                        }
+}
