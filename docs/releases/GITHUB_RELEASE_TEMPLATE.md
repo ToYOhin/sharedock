@@ -31,4 +31,4 @@ Derived from Pingvin Share X / Pingvin Share; BSD-2-Clause; original copyright r
 The distributed Docker image includes `/opt/app/LICENSE` and
 `/opt/app/NOTICE.md` for the applicable license and attribution materials.
 
-发布的 Docker 镜像包含 `/opt/app/LICENSE` 与 `/opt/app/NOTICE.md`，用于提供适用的许可证和上游署名材料。
+发布的 Docker 镜像包含 `/opt/app/LICENSE` 和 `/opt/app/NOTICE.md`，用于提供适用的许可证和上游署名材料。

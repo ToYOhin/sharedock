@@ -1,3 +1,15 @@
+## [0.9.1] (2026-07-28)
+
+### Release
+
+* establish an immutable public baseline after the repository history reset
+* publish separate English and Simplified Chinese project overviews for public
+  deployment and evaluation
+
+### Compatibility
+
+* align root, backend, and frontend package versions at `0.9.1`
+
 ## [0.9.0] (2026-07-11)
 
 ### Features
