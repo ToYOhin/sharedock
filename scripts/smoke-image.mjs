@@ -11,8 +11,8 @@ assert.ok(
 
 async function request(path, options = {}, expectedStatus = 200) {
   const response = await fetch(new URL(path, base), {
-    ...options,
     redirect: "error",
+    ...options,
     signal: AbortSignal.timeout(30_000),
   });
   assert.equal(response.status, expectedStatus, `${path}: unexpected HTTP status`);
@@ -65,7 +65,9 @@ const share = await (
 assert.ok(share.shareId, "Upload must return a share ID");
 assert.equal(share.fileName, "smoke.png");
 assert.equal(share.url, `http://localhost:3000/s/${share.shareId}`);
-await request(`/s/${share.shareId}`);
+const alias = await request(`/s/${share.shareId}`, { redirect: "manual" }, 307);
+assert.equal(alias.headers.get("location"), `/share/${share.shareId}`);
+await request(`/share/${share.shareId}`);
 const saved = await (
   await request(`/api/shares/${share.shareId}/from-owner`, { headers: { Cookie: cookie } })
 ).json();
