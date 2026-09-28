@@ -1,3 +1,19 @@
+## [Unreleased]
+
+### Security
+
+* update frontend and backend dependencies to address container scan findings,
+  including Next.js, Sharp, Axios, Nodemailer, Multer, and affected transitive packages
+* fail container security checks when fixable high or critical vulnerabilities are found
+* exclude local environment files, dependencies, logs, and application data from Docker builds
+
+### Compatibility
+
+* preserve Sharp's CommonJS integration and test real image resizing
+* explicitly generate the Prisma client before local and CI backend verification
+* smoke-test the built container with a fresh SQLite database, token upload,
+  persisted share, and rejection after token revocation
+
 ## [0.9.1] (2026-07-28)
 
 ### Release

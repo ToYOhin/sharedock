@@ -65,11 +65,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
       - name: Lint
         run: npm run lint
 
       - name: Build
         run: npm run build
+
+      - name: Verify native image processing
+        run: npx ts-node --transpile-only test/logo.service.test.ts
 
   docs:
     name: Documentation typecheck and build

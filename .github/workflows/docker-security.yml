@@ -47,6 +47,33 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Smoke test the built image
+        shell: bash
+        run: |
+          set -euo pipefail
+          container="sharedock-security-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          cleanup() {
+            result=$?
+            if [ "$result" -ne 0 ]; then docker logs "$container" || true; fi
+            docker rm -fv "$container" >/dev/null 2>&1 || true
+            exit "$result"
+          }
+          trap cleanup EXIT
+          docker run -d --name "$container" --cpus=2 \
+            -p 127.0.0.1:3000:3000 \
+            -e 'DATABASE_URL=file:../data/security-smoke.db?connection_limit=1' \
+            "$IMAGE_REF"
+          ready=false
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent --max-time 3 http://127.0.0.1:3000/api/health >/dev/null; then
+              ready=true
+              break
+            fi
+            sleep 2
+          done
+          if [ "$ready" != true ]; then echo "Image did not become healthy"; exit 1; fi
+          node scripts/smoke-image.mjs http://127.0.0.1:3000
+
       - name: Trivy SARIF report
         if: github.event_name != 'pull_request'
         uses: aquasecurity/trivy-action@v0.36.0
@@ -77,3 +104,13 @@ jobs:
           scanners: vuln,secret
           ignore-unfixed: true
           exit-code: "0"
+
+      - name: Block fixable high and critical vulnerabilities
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE_REF }}
+          format: table
+          severity: HIGH,CRITICAL
+          scanners: vuln
+          ignore-unfixed: true
+          exit-code: "1"

@@ -75,6 +75,7 @@ function Invoke-FrontendContractTests {
 
 Write-Host "ShareDock verification root: $repoRoot" -ForegroundColor Green
 
+Invoke-Checked -Name "generate Prisma client" -Executable "npx.cmd" -Arguments @("prisma", "generate") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "root lint" -Executable "npm.cmd" -Arguments @("run", "lint") -WorkingDirectory $repoRoot
 
 Invoke-Checked -Name "backend focused tests" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/cleanup-log.util.test.ts") -WorkingDirectory $backendRoot
@@ -83,6 +84,7 @@ Invoke-Checked -Name "backend focused tests" -Executable "npx.cmd" -Arguments @(
 Invoke-Checked -Name "backend focused tests" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/upload-token.util.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend focused tests" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/upload-webhook.util.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend service tests" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/upload-webhook.service.test.ts") -WorkingDirectory $backendRoot
+Invoke-Checked -Name "backend image compatibility test" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/logo.service.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend service tests" -Executable "npx.cmd" -Arguments @("ts-node", "-r", "tsconfig-paths/register", "--transpile-only", "test/cleanup-log.service.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend service tests" -Executable "npx.cmd" -Arguments @("ts-node", "-r", "tsconfig-paths/register", "--transpile-only", "test/upload-token.service.test.ts") -WorkingDirectory $backendRoot
 
