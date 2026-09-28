@@ -6,6 +6,8 @@
   including Next.js, Sharp, Axios, Nodemailer, Multer, and affected transitive packages
 * fail container security checks when fixable high or critical vulnerabilities are found
 * exclude local environment files, dependencies, logs, and application data from Docker builds
+* update PostCSS to 8.5.23 and qs to 6.16.0 to resolve the remaining source-map
+  disclosure and query-string denial-of-service findings
 
 ### Compatibility
 
