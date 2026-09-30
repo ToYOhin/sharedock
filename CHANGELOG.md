@@ -8,6 +8,8 @@
 * exclude local environment files, dependencies, logs, and application data from Docker builds
 * update PostCSS to 8.5.23 and qs to 6.16.0 to resolve the remaining source-map
   disclosure and query-string denial-of-service findings
+* update Nodemailer to 10.0.12 to fix address-parser denial of service and SMTP
+  transport isolation advisories, with offline email composition coverage
 
 ### Compatibility
 
@@ -15,6 +17,8 @@
 * explicitly generate the Prisma client before local and CI backend verification
 * smoke-test the built container with a fresh SQLite database, token upload,
   persisted share, and rejection after token revocation
+* enforce LF line endings for shell scripts so Windows checkouts build runnable
+  Linux containers
 
 ## [0.9.1] (2026-07-28)
 

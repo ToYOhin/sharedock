@@ -85,6 +85,7 @@ Invoke-Checked -Name "backend focused tests" -Executable "npx.cmd" -Arguments @(
 Invoke-Checked -Name "backend focused tests" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/upload-webhook.util.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend service tests" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/upload-webhook.service.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend image compatibility test" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/logo.service.test.ts") -WorkingDirectory $backendRoot
+Invoke-Checked -Name "backend email compatibility test" -Executable "npx.cmd" -Arguments @("ts-node", "-r", "tsconfig-paths/register", "--transpile-only", "test/email.service.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend service tests" -Executable "npx.cmd" -Arguments @("ts-node", "-r", "tsconfig-paths/register", "--transpile-only", "test/cleanup-log.service.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend service tests" -Executable "npx.cmd" -Arguments @("ts-node", "-r", "tsconfig-paths/register", "--transpile-only", "test/upload-token.service.test.ts") -WorkingDirectory $backendRoot
 

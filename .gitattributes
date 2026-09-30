@@ -1,0 +1,2 @@
+# Linux shell scripts must also work in images built from Windows checkouts.
+*.sh text eol=lf

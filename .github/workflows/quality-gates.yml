@@ -76,6 +76,9 @@ jobs:
 
       - name: Verify native image processing
         run: npx ts-node --transpile-only test/logo.service.test.ts
+      - name: Email composition compatibility test
+        working-directory: backend
+        run: npx ts-node -r tsconfig-paths/register --transpile-only test/email.service.test.ts
 
   docs:
     name: Documentation typecheck and build
