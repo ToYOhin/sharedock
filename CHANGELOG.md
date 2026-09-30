@@ -14,6 +14,8 @@
   refresh affected documentation build dependencies
 * audit all five project lockfiles, including development dependencies, in local
   verification and CI; fail on high/critical findings or incomplete scans
+* update body-parser to 2.3.0 to reject invalid request-body limits rather than
+  silently disabling size enforcement (CVE-2026-12590)
 
 ### Compatibility
 
