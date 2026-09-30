@@ -9,6 +9,8 @@
                     "format":  "cd frontend \u0026\u0026 npm run format \u0026\u0026 cd ../backend \u0026\u0026 npm run format",
                     "lint":  "cd frontend \u0026\u0026 npm run lint \u0026\u0026 cd ../backend \u0026\u0026 npm run lint",
                     "verify":  "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1",
+                    "security:audit":  "node scripts/audit-dependencies.mjs",
+                    "security:test":  "node --test scripts/test/audit-dependencies.test.mjs",
                     "release:check":  "npm run verify",
                     "version":  "conventional-changelog -p conventionalcommits -i CHANGELOG.md -o CHANGELOG.md \u0026\u0026 git add CHANGELOG.md",
                     "release:patch":  "cd backend \u0026\u0026 npm version patch --commit-hooks false \u0026\u0026 cd ../frontend \u0026\u0026 npm version patch --commit-hooks false \u0026\u0026 cd .. \u0026\u0026 git add . \u0026\u0026 npm version patch --force -m \u0027release: %s\u0027",

@@ -38,6 +38,28 @@ is not published by this workflow.
   vulnerability gate. Confirmed secret exposures still prohibit publication
   under the expectations above.
 
+## Source Dependency Gate
+
+`npm run security:audit` audits the committed lockfiles at the repository root,
+`frontend`, `backend`, `docs`, and `scripts`. It explicitly includes development,
+optional, and peer dependencies, without installing packages or running their
+lifecycle scripts. This catches build-time dependencies excluded from the final
+container image. It forces online auditing even when local npm configuration
+sets offline mode or disables automatic installation-time auditing.
+
+The same check runs in Quality Gates for pushes and pull requests to `main`,
+manual runs, and the local `npm run verify` command. Any high or critical finding
+fails the check, including findings without a known fix. Low and moderate
+findings are summarized but do not block. Registry/network errors, missing locks,
+invalid reports, and nonzero audit failures also fail the check; they are never
+treated as a clean scan. `npm run security:test` tests the blocking/error paths
+without accessing the network.
+
+This source gate uses npm's advisory data and complements the actual-container
+Trivy scan. A passing result in one scanner does not substitute for the other.
+Neither check publishes images or releases. Repository Dependabot settings are
+separate from these workflow checks.
+
 ## Reporting a Vulnerability
 
 Do not include exploit details, credentials, or private data in a public issue.

@@ -10,6 +10,10 @@
   disclosure and query-string denial-of-service findings
 * update Nodemailer to 10.0.12 to fix address-parser denial of service and SMTP
   transport isolation advisories, with offline email composition coverage
+* update Moment to 2.31.0, tar to 7.5.22, and Joi to 17.13.8;
+  refresh affected documentation build dependencies
+* audit all five project lockfiles, including development dependencies, in local
+  verification and CI; fail on high/critical findings or incomplete scans
 
 ### Compatibility
 
