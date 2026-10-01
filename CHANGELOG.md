@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+### Documentation
+
+* consolidate the public roadmap, project structure and documentation entry points
+* align upgrade, configuration and local-image examples with the source-build setup
+* distinguish implemented behavior, manual acceptance, unreleased main changes and
+  optional integrations instead of expanding the project into a commercial platform
+
 ### Security
 
 * update frontend and backend dependencies to address container scan findings,

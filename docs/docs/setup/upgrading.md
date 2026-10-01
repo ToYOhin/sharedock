@@ -4,50 +4,64 @@ id: upgrading
 
 # Upgrading
 
-### Upgrade to a new version
+Review the changelog and compatibility notes for the revision you intend to
+use. `main` can contain unreleased changes; pulling it is not the same as
+installing the latest tagged Release. Preserve any local source modifications
+before updating, and keep the database and uploaded files together.
 
-Review the release notes for breaking changes before upgrading.
+## Docker Compose source build
 
-#### Docker
+The supplied Compose file uses `sharedock:local` with `build: .`. It must be
+rebuilt from the repository; `docker compose pull` alone does not update that
+source-built image.
 
-```bash
-docker compose pull
-docker compose up -d
-```
+1. From the repository root, stop the application with `docker compose stop`.
+2. Back up the host-mounted `data/` directory using the
+   [backup guide](backup-restore.md). Do not delete the data volume.
+3. For a source-main update, fast-forward the source and build the local image:
 
-### Portainer
-
-1. In your container page, click on Recreate.
-2. Check the Re-Pull image toggle.
-3. Click on Recreate.
-
-#### Stand-alone
-
-1. Stop the running app
-
-   ```bash
-   pm2 stop sharedock-backend sharedock-frontend
-   ```
-
-2. Repeat the steps from the [installation guide](./installation.md#stand-alone-installation) except the `git clone` step.
-
-   ```bash
-   cd sharedock
-
-   # Update the checked-out public branch
+   ```powershell
    git pull --ff-only origin main
-
-   # Start the backend
-   cd backend
-   npm install
-   npm run build
-   pm2 restart sharedock-backend
-
-   # Start the frontend
-   cd ../frontend
-   npm install
-   npm run build
-   pm2 restart sharedock-frontend
+   docker compose build sharedock
+   docker compose up -d
    ```
 
-   Note that environment variables are not picked up when using pm2 restart, if you actually want to change configs, you need to run `pm2 --update-env restart`
+4. Check the service health and confirm an existing share is still accessible.
+
+The container entrypoint applies pending migrations and seeds configuration
+before starting the backend. Updating documentation alone does not require
+rebuilding an otherwise unchanged local demonstration image.
+
+## Explicit prebuilt image / Portainer
+
+Only use re-pull/recreate when the deployment actually references an accessible,
+prebuilt image. Choose a specific image version, back up the existing data, keep
+the same volume mapping, and then recreate the service. Pasting the source-build
+Compose file into a web editor does not supply its Dockerfile/context; see
+[installation](installation.md#installation-with-portainer).
+
+## Standalone source installation
+
+The supported source guide uses Node22/npm10 and two foreground terminals, not
+a mandatory process manager.
+
+1. Stop both services in their terminals and back up the configured data directory.
+2. From the repository root, run `git pull --ff-only origin main` for a source-main
+   update, then repeat the locked install, Prisma generation and build steps in
+   [standalone installation](installation.md#stand-alone-installation), without
+   cloning again. Keep the same `DATA_DIRECTORY`, `DATABASE_URL` and configuration.
+3. Restart the backend with `npm run prod` and the frontend with `npm run start`
+   in their respective directories. Backend startup initializes only a missing
+   SQLite file, applies migrations, and seeds configuration before listening.
+
+On Windows, after dependencies and Prisma Client are prepared, the existing
+`scripts/upgrade.ps1 -Apply` can perform the pre-upgrade backup, migration, seed
+and backend/frontend builds. It does not install dependencies or stop/restart
+services. Its default data path is the repository-root `data/`; pass `-DataPath`
+and, where needed, `-DatabaseUrl` for another layout. See the
+[upgrade-script guide](backup-restore.md#upgrade-flow).
+
+Do not run both the manual build sequence and script rebuilds without a reason.
+Do not use `-SkipBuild` after application source changes unless the matching
+outputs are already built. A backup script success marker is not a complete
+restored-application rehearsal.

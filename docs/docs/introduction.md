@@ -23,3 +23,11 @@ It is intentionally narrower than a full cloud drive. ShareDock should make temp
 - Keep the upload, authentication, and storage paths stable unless a focused slice requires changing them.
 - Prefer small, reversible improvements over broad rewrites.
 - Keep upstream attribution and license notices intact while giving ShareDock its own product direction.
+
+## Current phase
+
+The core baseline is implemented. The next boundary is a small local
+demonstration and on-demand maintenance, not another feature expansion or a
+commercial launch. See the [roadmap](project/roadmap.md) for acceptance limits
+and deferred work, and [project structure](project/structure.md) for module
+locations and runtime contracts.

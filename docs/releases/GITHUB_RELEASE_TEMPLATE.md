@@ -15,12 +15,14 @@ but keep the upstream attribution section unchanged.
 ### Verification
 
 - [Local verification command and result]
-- [CI or security workflow link and result]
+- [Quality Gates and actual-image security workflow links for this exact release commit]
 - [Migration, backup, or compatibility evidence when applicable]
 
 ### Compatibility
 
-- [Supported runtime, image platform, migration, or storage notes]
+- [Supported Node/npm versions, image platform, migration, or storage notes]
+- [Confirm that package versions, tag and OCI image metadata describe this release,
+  not later unreleased main changes]
 
 ### Upstream Attribution / 上游署名
 

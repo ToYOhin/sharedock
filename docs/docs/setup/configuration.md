@@ -16,9 +16,13 @@ You can change the settings in the UI (`/admin/config`)
 
 You can set the configuration via a YAML file. If you choose this way, you won't be able to change the settings in the UI.
 
-If you use Docker you can create a `config.yml` file based on the [`config.example.yaml`](https://github.com/ToYOhin/sharedock/blob/main/config.example.yaml) and mount it to `/opt/app/config.yaml` in the container.
+If you use Docker, copy [`config.example.yaml`](https://github.com/ToYOhin/sharedock/blob/main/config.example.yaml) to `config.yaml` and mount it to `/opt/app/config.yaml` in the container. The supplied Compose file includes a commented volume mapping for this path.
 
-If you run ShareDock without Docker, you can create a `config.yml` file based on the [`config.example.yaml`](https://github.com/ToYOhin/sharedock/blob/main/config.example.yaml) in the root directory of the project.
+For a standalone installation, put `config.yaml` in the repository root when
+starting the backend from `backend/`, or set `CONFIG_FILE` to its actual path.
+The default filename is `config.yaml`, not `config.yml`. Keep the example's
+`initUser` section; leave `enabled: false` to register the first administrator
+through the UI instead of provisioning an account from YAML.
 
 ---
 
@@ -43,6 +47,11 @@ For installation specific configuration, you can use environment variables. The 
 | --------- | ----------------------- | ---------------------------------------- |
 | `PORT`    | `3000`                  | The port on which the frontend listens.  |
 | `API_URL` | `http://localhost:8080` | The URL of the backend for the frontend. |
+
+If you change `BACKEND_PORT`, set `API_URL` to the same backend target and update
+any Caddy/external-proxy routing. Setting a backend port alone does not update the
+frontend proxy. The supplied Docker topology uses fixed default routes; custom
+topologies need an explicit check rather than relying on the default health test.
 
 #### Docker specific
 

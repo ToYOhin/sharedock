@@ -68,7 +68,8 @@ Else you have to add the ClamAV container to the ShareDock Docker Compose stack:
 ```diff
 services:
   sharedock:
-    image: ToYOhin/sharedock
+    image: sharedock:local
+    build: .
     ...
 +   depends_on:
 +     clamav:

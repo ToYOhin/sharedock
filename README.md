@@ -21,6 +21,17 @@ small operational surface.
 - Send successful automation uploads to an optional HMAC-SHA256-signed webhook.
 - Deploy with local filesystem storage or S3-compatible object storage.
 
+## Project Status
+
+The core relay and automation baseline is implemented. Current work is limited
+to reproducible setup, a bounded local demonstration, and maintenance—not a
+cloud-drive expansion or a production-service certification. See the
+[roadmap](docs/docs/project/roadmap.md) for verified boundaries and deferred work,
+and the [project structure](docs/docs/project/structure.md) for module ownership.
+
+This README follows `main`. Changes under `Unreleased` in the changelog are not
+automatically included in the latest tagged Release.
+
 ## Quick Start
 
 ### Prerequisites

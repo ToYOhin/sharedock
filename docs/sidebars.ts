@@ -18,6 +18,11 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Project",
+      items: ["project/roadmap", "project/structure"],
+    },
+    {
+      type: "category",
       label: "Getting Started",
       items: [
         {

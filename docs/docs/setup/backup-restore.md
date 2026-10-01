@@ -5,7 +5,8 @@ id: backup-restore
 # Backup, Restore, and Upgrade
 
 ShareDock's local deployment stores the SQLite database and local uploaded
-files below the configured data directory. The default repository layout is:
+files below the configured data directory. The supplied Docker Compose host
+mount and the explicit paths in the standalone installation guide use:
 
 - `data/sharedock.db` — SQLite database;
 - `data/uploads/shares/` — local uploaded file contents;
@@ -13,6 +14,11 @@ files below the configured data directory. The default repository layout is:
 
 S3 objects are external and are not included in the local archive. Back up the
 configured S3 bucket separately.
+
+If you use another `DATA_DIRECTORY` or `DATABASE_URL`, confirm where both the
+database and files actually live and pass that data directory to the scripts.
+Backend-relative defaults are not a guarantee that a custom native deployment
+uses the repository-root `data/` directory.
 
 ## Backup
 
@@ -57,15 +63,20 @@ Set-Location $repoPath
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/upgrade.ps1
 ```
 
-After reviewing the backup, apply pending Prisma migrations, seed configuration,
-and rebuild backend/frontend:
+Before `-Apply`, stop both services, review the backup, update the source, and
+install its locked backend/frontend dependencies using the supported Node/npm
+versions. See [Upgrading](upgrading.md) for the source update sequence.
+
+Then apply pending Prisma migrations, seed configuration, and rebuild
+backend/frontend:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/upgrade.ps1 -Apply
 ```
 
 For a Docker deployment, stop the service, back up the host-mounted `data/`
-directory, pull/rebuild the image, and start the service again. The container
+directory, and follow the source-build or explicit-image path in
+[Upgrading](upgrading.md). The container
 entrypoint applies `prisma migrate deploy` and seeds configuration before
 starting the backend.
 
@@ -73,5 +84,9 @@ starting the backend.
 
 - Never commit database files, uploaded files, archives, or backup manifests.
 - Keep a tested backup before every schema upgrade.
+- The restore script checks extracted file count and byte size. Its success
+  marker is not a database integrity check, archive-manifest authentication or
+  a restored-application acceptance result; inspect the manifest hash and start
+  a disposable restored instance when rehearsing recovery.
 - A restore rehearsal is not a production cutover; stop the service before
   replacing live data.
