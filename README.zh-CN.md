@@ -25,6 +25,9 @@ ShareDock 有意不做云盘或文件管理器替代品。它聚焦于需要清�
 - 已安装 Docker Engine 和 Docker Compose v2
 - 有可写入的 ShareDock 数据目录
 
+独立部署使用 Node.js 22 LTS 和 npm 10.x；仓库通过 `.node-version`
+固定已验证的 Node.js 版本。
+
 ### 使用 Docker Compose 运行
 
 ```powershell

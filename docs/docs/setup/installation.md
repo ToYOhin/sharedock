@@ -25,7 +25,8 @@ Your container is now listening on `http://localhost:<externalport>`, have fun w
 
 Required tools:
 
-- [Node.js](https://nodejs.org/en/download/) 20.x
+- [Node.js](https://nodejs.org/en/download/) 22 LTS (use the version in `.node-version`)
+- npm 10.x
 - [Git](https://git-scm.com/downloads)
 - [pm2](https://pm2.keymetrics.io/) for running ShareDock in the background
 

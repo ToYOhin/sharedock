@@ -28,6 +28,9 @@ small operational surface.
 - Docker Engine with Docker Compose v2
 - A writable directory for ShareDock data
 
+Standalone installations use Node.js 22 LTS and npm 10.x; the repository pins
+the tested Node.js version in `.node-version`.
+
 ### Run with Docker Compose
 
 ```powershell

@@ -11,6 +11,11 @@ $backendRoot = Join-Path $repoRoot "backend"
 $docsRoot = Join-Path $repoRoot "docs"
 $verifyTempRoot = Join-Path $repoRoot "temp\verify-frontend-tests"
 
+$nodeVersion = (& node.exe --version 2>$null)
+if ($LASTEXITCODE -ne 0 -or $nodeVersion -notmatch "^v22\.") {
+  throw "ShareDock verification requires Node 22.x. Current runtime: $nodeVersion. Use $repoRoot\.node-version."
+}
+
 function Invoke-Checked {
   param(
     [Parameter(Mandatory = $true)][string]$Name,
@@ -88,6 +93,7 @@ Invoke-Checked -Name "backend focused tests" -Executable "npx.cmd" -Arguments @(
 Invoke-Checked -Name "backend service tests" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/upload-webhook.service.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend image compatibility test" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/logo.service.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend request body limit test" -Executable "node.exe" -Arguments @("--test", "test/body-parser.test.cjs") -WorkingDirectory $backendRoot
+Invoke-Checked -Name "backend real i18n regression" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/i18n.runtime.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend email compatibility test" -Executable "npx.cmd" -Arguments @("ts-node", "-r", "tsconfig-paths/register", "--transpile-only", "test/email.service.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend service tests" -Executable "npx.cmd" -Arguments @("ts-node", "-r", "tsconfig-paths/register", "--transpile-only", "test/cleanup-log.service.test.ts") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "backend service tests" -Executable "npx.cmd" -Arguments @("ts-node", "-r", "tsconfig-paths/register", "--transpile-only", "test/upload-token.service.test.ts") -WorkingDirectory $backendRoot
@@ -108,11 +114,11 @@ if ($RunSmoke) {
   Invoke-Checked `
     -Name "disposable SQLite smoke database" `
     -Executable "powershell.exe" `
-    -Arguments @(
+    -Arguments (@(
       "-NoProfile",
       "-ExecutionPolicy", "Bypass",
       "-File", (Join-Path $PSScriptRoot "smoke-db.ps1")
-    ) + $smokeArguments `
+    ) + $smokeArguments) `
     -WorkingDirectory $repoRoot
 }
 

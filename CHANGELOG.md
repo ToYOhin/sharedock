@@ -19,6 +19,11 @@
 
 ### Compatibility
 
+* align local verification, package engines, CI, and Docker with Node.js 22 LTS
+  while retaining npm 10 and existing dependency versions
+* check real translation loading, language fallback, interpolation, and localized
+  validation through a disposable Nest HTTP application
+* correct PowerShell verification argument grouping for optional SQLite smoke checks
 * preserve Sharp's CommonJS integration and test real image resizing
 * explicitly generate the Prisma client before local and CI backend verification
 * smoke-test the built container with a fresh SQLite database, token upload,

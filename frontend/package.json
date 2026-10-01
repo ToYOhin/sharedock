@@ -2,7 +2,7 @@
     "name":  "sharedock-frontend",
     "version":  "0.9.1",
     "engines":  {
-                    "node":  "20.x",
+                    "node":  "22.x",
                     "npm":  ">=10 <11"
                 },
     "scripts":  {

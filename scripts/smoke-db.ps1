@@ -16,8 +16,8 @@ if (-not $resolvedSmokeRoot.StartsWith("$resolvedRepoRoot$([IO.Path]::DirectoryS
 }
 
 $nodeVersion = (& node.exe --version 2>$null)
-if ($LASTEXITCODE -ne 0 -or $nodeVersion -notmatch "^v20\.") {
-  throw "ShareDock Prisma smoke requires Node 20.x. Current runtime: $nodeVersion. Switch to the version in $repoRoot\.node-version and rerun."
+if ($LASTEXITCODE -ne 0 -or $nodeVersion -notmatch "^v22\.") {
+  throw "ShareDock Prisma smoke requires Node 22.x. Current runtime: $nodeVersion. Switch to the version in $repoRoot\.node-version and rerun."
 }
 
 function Invoke-Checked {
