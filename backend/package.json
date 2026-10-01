@@ -8,7 +8,7 @@
     "scripts":  {
                     "build":  "nest build",
                     "dev":  "cross-env NODE_ENV=development nest start --watch",
-                    "prod":  "prisma migrate deploy \u0026\u0026 prisma db seed \u0026\u0026 node dist/src/main",
+                    "prod":  "prisma db seed -- --initialize-sqlite-only \u0026\u0026 prisma migrate deploy \u0026\u0026 prisma db seed \u0026\u0026 node dist/src/main",
                     "lint":  "eslint \"src/**/*.ts\"",
                     "format":  "prettier --end-of-line=auto --write \u0027src/**/*.ts\u0027",
                     "test:system":  "prisma migrate reset -f \u0026\u0026 nest start \u0026 wait-on http://localhost:8080/api/configs \u0026\u0026 npx newman run ./test/newman-system-tests.json"

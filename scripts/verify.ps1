@@ -83,6 +83,7 @@ Write-Host "ShareDock verification root: $repoRoot" -ForegroundColor Green
 Invoke-Checked -Name "dependency gate tests" -Executable "npm.cmd" -Arguments @("run", "security:test") -WorkingDirectory $repoRoot
 Invoke-Checked -Name "source dependency security gate" -Executable "npm.cmd" -Arguments @("run", "security:audit") -WorkingDirectory $repoRoot
 Invoke-Checked -Name "generate Prisma client" -Executable "npx.cmd" -Arguments @("prisma", "generate") -WorkingDirectory $backendRoot
+Invoke-Checked -Name "SQLite file initialization tests" -Executable "node.exe" -Arguments @("--test", "test/initialize-sqlite.test.cjs") -WorkingDirectory $backendRoot
 Invoke-Checked -Name "root lint" -Executable "npm.cmd" -Arguments @("run", "lint") -WorkingDirectory $repoRoot
 
 Invoke-Checked -Name "backend focused tests" -Executable "npx.cmd" -Arguments @("ts-node", "--transpile-only", "test/cleanup-log.util.test.ts") -WorkingDirectory $backendRoot

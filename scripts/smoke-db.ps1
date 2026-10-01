@@ -56,6 +56,7 @@ try {
   Write-Host "This flow uses Prisma migrations and the repository seed; it does not apply hand-written SQL." -ForegroundColor DarkGray
 
   Invoke-Checked -Name "Prisma generate" -Executable "npx.cmd" -Arguments @("prisma", "generate") -WorkingDirectory (Join-Path $repoRoot "backend")
+  Invoke-Checked -Name "initialize SQLite file" -Executable "node.exe" -Arguments @("prisma/initialize-sqlite.cjs") -WorkingDirectory (Join-Path $repoRoot "backend")
 
   try {
     Invoke-Checked -Name "Prisma migrate deploy" -Executable "npx.cmd" -Arguments @("prisma", "migrate", "deploy") -WorkingDirectory (Join-Path $repoRoot "backend")

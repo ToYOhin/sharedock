@@ -39,6 +39,8 @@ $env:DATABASE_URL = $DatabaseUrl
 try {
   Push-Location (Join-Path $repoRoot "backend")
   try {
+    & node.exe prisma/initialize-sqlite.cjs
+    if ($LASTEXITCODE -ne 0) { throw "SQLite file initialization failed with exit code $LASTEXITCODE" }
     & npx.cmd prisma migrate deploy
     if ($LASTEXITCODE -ne 0) { throw "Prisma migrate deploy failed with exit code $LASTEXITCODE" }
     & npx.cmd prisma db seed

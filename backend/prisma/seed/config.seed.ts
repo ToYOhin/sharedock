@@ -1,6 +1,14 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import * as crypto from "crypto";
 
+if (process.argv.includes("--initialize-sqlite-only")) {
+  // Prisma's seed CLI loads and expands .env before invoking this entry point.
+  const { initializeSqliteFile } = require("../initialize-sqlite.cjs");
+  const result = initializeSqliteFile(process.env.DATABASE_URL);
+  console.log(`SQLITE_FILE_READY: ${result.created ? "created" : "preserved"}`);
+  process.exit(0);
+}
+
 export const configVariables = {
   internal: {
     jwtSecret: {

@@ -24,6 +24,8 @@
 * check real translation loading, language fallback, interpolation, and localized
   validation through a disposable Nest HTTP application
 * correct PowerShell verification argument grouping for optional SQLite smoke checks
+* initialize missing SQLite files without overwriting existing data before native
+  startup, smoke checks, and upgrades; keep Prisma migrations responsible for schema
 * preserve Sharp's CommonJS integration and test real image resizing
 * explicitly generate the Prisma client before local and CI backend verification
 * smoke-test the built container with a fresh SQLite database, token upload,

@@ -48,7 +48,9 @@ configuration, and protect the first administrator account.
 
 ## First Steps
 
-1. Sign in and change the initial administrator credentials.
+1. Open `/auth/signUp` and register the first account; it becomes the
+   administrator automatically. There are no default administrator credentials
+   unless you explicitly provision an account through `config.yaml`.
 2. Open **Admin → Configuration** to review expiration, storage, and service
    settings.
 3. Use **Upload** to create a temporary share link or a reverse-share link.

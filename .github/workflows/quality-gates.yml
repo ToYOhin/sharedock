@@ -95,6 +95,8 @@ jobs:
 
       - name: Verify native image processing
         run: npx ts-node --transpile-only test/logo.service.test.ts
+      - name: Verify SQLite file initialization
+        run: node --test test/initialize-sqlite.test.cjs
       - name: Verify request body limits and parsing
         run: node --test test/body-parser.test.cjs
       - name: Verify real translations and localized validation
