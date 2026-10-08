@@ -9,6 +9,9 @@
 
 ### Security
 
+* refresh proxy-addr and source-map-js locks and patched documentation dependencies,
+  pinning Tinypool to 2.1.2; source audits still block on the unpatched braces
+  advisory [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm)
 * update frontend and backend dependencies to address container scan findings,
   including Next.js, Sharp, Axios, Nodemailer, Multer, and affected transitive packages
 * fail container security checks when fixable high or critical vulnerabilities are found
