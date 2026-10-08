@@ -74,11 +74,6 @@ semantics remain unchanged unless the requested fix requires it.
 - Quality Gates runs a selected set of focused tests, not every regression in
   the local verifier. Changes to token/webhook/cleanup behavior should run the
   relevant existing tests; a green lint/build result is not exhaustive coverage.
-- A default source Docker build still has a legacy `SHAREDOCK_VERSION=0.9.0`
-  fallback. Published builds receive an explicit version from the release
-  workflow. Align this fallback with package/tag metadata in a separately
-  requested packaging slice, not by claiming the label identifies the current
-  source revision.
 
 These limits do not prevent a local demonstration of the existing core relay.
 
@@ -88,6 +83,10 @@ Root, frontend and backend package versions currently identify the `0.9.1` line;
 `main` also contains changes listed under `Unreleased`, including Node22 alignment
 and native SQLite startup fixes. A `v0.9.1` Release/tag is a historical snapshot,
 not evidence that those later changes were included in that release.
+
+Local source Docker builds default their OCI version label to the `0.9.1`
+package line. The release workflow can override it with the release tag. Use the
+Git revision to identify which unreleased changes are present in a source build.
 
 There is no automatic next Release or release deadline in this roadmap. A future
 release requires an explicit decision, consistent package/tag/image metadata,

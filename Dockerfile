@@ -33,7 +33,7 @@ RUN npm run build && npx tsc prisma/seed/config.seed.ts --outDir dist/prisma/see
 # Stage 5: Final image
 FROM node:${NODE_VERSION}-alpine AS runner
 ENV NODE_ENV=docker
-ARG SHAREDOCK_VERSION=0.9.0
+ARG SHAREDOCK_VERSION=0.9.1
 LABEL org.opencontainers.image.title="ShareDock" \
       org.opencontainers.image.version="$SHAREDOCK_VERSION" \
       org.opencontainers.image.source="https://github.com/ToYOhin/sharedock" \
