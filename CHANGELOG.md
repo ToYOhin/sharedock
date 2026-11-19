@@ -9,9 +9,12 @@
 
 ### Security
 
+* update Next.js to 15.5.29, body-parser to 2.4.0, Multer to 2.5.0 and
+  follow-redirects to 1.16.3 in the application locks
+* update Handlebars, Joi, launch-editor and the documentation server's
+  body-parser to patched versions
 * refresh proxy-addr and source-map-js locks and patched documentation dependencies,
-  pinning Tinypool to 2.1.2; source audits still block on the unpatched braces
-  advisory [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm)
+  pinning Tinypool to 2.1.2
 * update frontend and backend dependencies to address container scan findings,
   including Next.js, Sharp, Axios, Nodemailer, Multer, and affected transitive packages
 * fail container security checks when fixable high or critical vulnerabilities are found
